@@ -1,7 +1,10 @@
 package com.prolificinteractive.materialcalendarview;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +16,8 @@ public class DayViewFacade {
 
   private boolean isDecorated;
 
+  @ColorInt
+  private Integer textColor = null;
   private Drawable backgroundDrawable = null;
   private Drawable selectionDrawable = null;
   private final LinkedList<Span> spans = new LinkedList<>();
@@ -32,6 +37,16 @@ public class DayViewFacade {
       throw new IllegalArgumentException("Cannot be null");
     }
     this.backgroundDrawable = drawable;
+    isDecorated = true;
+  }
+
+  /**
+   * Set the color of the text
+   *
+   * @param color Color of the text
+   */
+  public void setTextColor(@ColorInt int color) {
+    this.textColor = color;
     isDecorated = true;
   }
 
@@ -74,6 +89,7 @@ public class DayViewFacade {
   }
 
   void reset() {
+    textColor = null;
     backgroundDrawable = null;
     selectionDrawable = null;
     spans.clear();
@@ -87,6 +103,9 @@ public class DayViewFacade {
    * @param other facade to apply our data to
    */
   void applyTo(DayViewFacade other) {
+    if (textColor != null) {
+      other.textColor = textColor;
+    }
     if (selectionDrawable != null) {
       other.setSelectionDrawable(selectionDrawable);
     }
@@ -100,6 +119,12 @@ public class DayViewFacade {
 
   boolean isDecorated() {
     return isDecorated;
+  }
+
+  @Nullable
+  @ColorInt
+  public Integer getTextColor() {
+    return textColor;
   }
 
   Drawable getSelectionDrawable() {
