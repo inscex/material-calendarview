@@ -79,6 +79,7 @@ abstract class CalendarPagerView extends ViewGroup
     DayView dayView = new DayView(getContext(), day);
     dayView.setOnClickListener(this);
     dayView.setOnLongClickListener(this);
+    dayView.isSelectable = mcv.getAllDaysSelectable();
     dayViews.add(dayView);
     addView(dayView, new LayoutParams());
   }
@@ -187,7 +188,7 @@ abstract class CalendarPagerView extends ViewGroup
   }
 
   protected void invalidateDecorators() {
-    final DayViewFacade facadeAccumulator = new DayViewFacade();
+    final DayViewFacade facadeAccumulator = new DayViewFacade(mcv);
     for (DayView dayView : dayViews) {
       facadeAccumulator.reset();
       for (DecoratorResult result : decoratorResults) {
@@ -203,7 +204,9 @@ abstract class CalendarPagerView extends ViewGroup
   public void onClick(final View v) {
     if (v instanceof DayView) {
       final DayView dayView = (DayView) v;
-      mcv.onDateClicked(dayView);
+      if (dayView.isSelectable) {
+        mcv.onDateClicked(dayView);
+      }
     }
   }
 

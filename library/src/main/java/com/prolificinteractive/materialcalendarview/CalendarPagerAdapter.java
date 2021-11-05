@@ -59,7 +59,7 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
   public void invalidateDecorators() {
     decoratorResults = new ArrayList<>();
     for (DayViewDecorator decorator : decorators) {
-      DayViewFacade facade = new DayViewFacade();
+      DayViewFacade facade = new DayViewFacade(mcv);
       decorator.decorate(facade);
       if (facade.isDecorated()) {
         decoratorResults.add(new DecoratorResult(decorator, facade));

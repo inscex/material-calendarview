@@ -174,6 +174,11 @@ public class MaterialCalendarView extends ViewGroup {
   private static final int DEFAULT_MAX_WEEKS = 6;
   private static final int DAY_NAMES_ROW = 1;
 
+  /**
+   * The default flags for disabling the selection of dates.
+   */
+  public static final boolean DAYS_SELECTABLE_DEFAULTS = true;
+
   private final TitleChanger titleChanger;
 
   private final TextView title;
@@ -239,6 +244,7 @@ public class MaterialCalendarView extends ViewGroup {
   private boolean allowClickDaysOutsideCurrentMonth = true;
   private DayOfWeek firstDayOfWeek;
   private boolean showWeekDays;
+  private boolean allDaysSelectable;
 
   private State state;
 
@@ -308,6 +314,7 @@ public class MaterialCalendarView extends ViewGroup {
       }
 
       showWeekDays = a.getBoolean(R.styleable.MaterialCalendarView_mcv_showWeekDays, true);
+      allDaysSelectable = a.getBoolean(R.styleable.MaterialCalendarView_mcv_allDaysSelectable, DAYS_SELECTABLE_DEFAULTS);
 
       newState()
           .setFirstDayOfWeek(firstDayOfWeek)
@@ -984,6 +991,8 @@ public class MaterialCalendarView extends ViewGroup {
   public int getShowOtherDates() {
     return adapter.getShowOtherDates();
   }
+
+  public boolean getAllDaysSelectable() { return this.allDaysSelectable; }
 
   /**
    * @return true if allow click on days outside current month displayed

@@ -45,6 +45,7 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
   private boolean isInRange = true;
   private boolean isInMonth = true;
   private boolean isDecoratedDisabled = false;
+  public boolean isSelectable;
   @ShowOtherDates
   private int showOtherDates = MaterialCalendarView.SHOW_DEFAULTS;
 
@@ -175,6 +176,10 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
     setVisibility(shouldBeVisible ? View.VISIBLE : View.INVISIBLE);
   }
 
+  public void setIsSelectable(boolean selectable) {
+    this.isSelectable = selectable;
+  }
+
   protected void setupSelection(
       @ShowOtherDates int showOtherDates,
       boolean inRange,
@@ -258,6 +263,7 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
    */
   void applyFacade(DayViewFacade facade) {
     this.isDecoratedDisabled = facade.areDaysDisabled();
+    this.isSelectable = facade.isSelectable();
     setEnabled();
 
     setCustomBackground(facade.getBackgroundDrawable());

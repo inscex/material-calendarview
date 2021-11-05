@@ -15,16 +15,18 @@ import java.util.List;
 public class DayViewFacade {
 
   private boolean isDecorated;
-
+  private MaterialCalendarView mcv;
   @ColorInt
   private Integer textColor = null;
   private Drawable backgroundDrawable = null;
   private Drawable selectionDrawable = null;
   private final LinkedList<Span> spans = new LinkedList<>();
   private boolean daysDisabled = false;
+  private boolean selectable;
 
-  DayViewFacade() {
+  DayViewFacade(MaterialCalendarView mcv) {
     isDecorated = false;
+    this.mcv = mcv;
   }
 
   /**
@@ -88,6 +90,10 @@ public class DayViewFacade {
     this.isDecorated = true;
   }
 
+  public void setSelectable(boolean selectable) {
+    this.selectable = selectable;
+  }
+
   void reset() {
     textColor = null;
     backgroundDrawable = null;
@@ -95,6 +101,7 @@ public class DayViewFacade {
     spans.clear();
     isDecorated = false;
     daysDisabled = false;
+    selectable = mcv.getAllDaysSelectable();
   }
 
   /**
@@ -114,11 +121,16 @@ public class DayViewFacade {
     }
     other.spans.addAll(spans);
     other.isDecorated |= this.isDecorated;
+    other.selectable = this.selectable;
     other.daysDisabled = daysDisabled;
   }
 
   boolean isDecorated() {
     return isDecorated;
+  }
+
+  boolean isSelectable() {
+    return selectable;
   }
 
   @Nullable
